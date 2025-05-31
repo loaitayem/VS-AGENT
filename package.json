@@ -1,0 +1,161 @@
+{
+  "name": "ai-code-agent",
+  "displayName": "AI Code Agent",
+  "description": "AI-powered coding agent with Claude integration and multi-model support",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "AI",
+    "Programming Languages",
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "ai-code-agent.startChat",
+        "title": "AI Agent: Start Chat",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "ai-code-agent.setApiKey",
+        "title": "AI Agent: Set Anthropic API Key"
+      },
+      {
+        "command": "ai-code-agent.selectModel",
+        "title": "AI Agent: Select Model"
+      },
+      {
+        "command": "ai-code-agent.showHistory",
+        "title": "AI Agent: Show Session History"
+      },
+      {
+        "command": "ai-code-agent.executeTask",
+        "title": "AI Agent: Execute Task"
+      },
+      {
+        "command": "ai-code-agent.indexWorkspace",
+        "title": "AI Agent: Index Workspace"
+      },
+      {
+        "command": "ai-code-agent.configurePreprocessor",
+        "title": "AI Agent: Configure Preprocessor Model"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "ai-agent-sidebar",
+          "title": "AI Code Agent",
+          "icon": "$(hubot)"
+        }
+      ]
+    },
+    "views": {
+      "ai-agent-sidebar": [
+        {
+          "id": "ai-agent-chat",
+          "name": "Chat",
+          "type": "webview"
+        },
+        {
+          "id": "ai-agent-tasks",
+          "name": "Tasks & Progress"
+        },
+        {
+          "id": "ai-agent-history",
+          "name": "Session History"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "AI Code Agent",
+      "properties": {
+        "ai-code-agent.model": {
+          "type": "string",
+          "default": "claude-opus-4",
+          "enum": [
+            "claude-opus-4",
+            "claude-sonnet-4"
+          ],
+          "description": "Claude model to use"
+        },
+        "ai-code-agent.mode": {
+          "type": "string",
+          "default": "thinking",
+          "enum": [
+            "thinking",
+            "max"
+          ],
+          "description": "Model mode"
+        },
+        "ai-code-agent.preprocessorModel": {
+          "type": "string",
+          "default": "llama3",
+          "enum": [
+            "llama3",
+            "gemini-1.5-pro",
+            "codellama",
+            "local-ollama"
+          ],
+          "description": "Preprocessor model for indexing and context preparation"
+        },
+        "ai-code-agent.maxFilesPerOperation": {
+          "type": "number",
+          "default": 10,
+          "description": "Maximum files to modify in a single operation"
+        },
+        "ai-code-agent.maxTokensPerRequest": {
+          "type": "number",
+          "default": 100000,
+          "description": "Maximum tokens per API request"
+        },
+        "ai-code-agent.enablePromptAssistant": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable prompt construction assistant"
+        },
+        "ai-code-agent.autoIndexing": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically index workspace on startup"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/sinon": "^17.0.4",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.20.0",
+    "@google/generative-ai": "^0.7.0",
+    "diff": "^5.1.0",
+    "langchain": "^0.1.0",
+    "ollama": "^0.5.0",
+    "openai": "^4.28.0",
+    "sinon": "^20.0.0",
+    "tiktoken": "^1.0.13",
+    "tree-sitter": "^0.20.0",
+    "unified": "^11.0.0"
+  }
+}
