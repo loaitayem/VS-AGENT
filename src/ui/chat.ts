@@ -210,13 +210,14 @@ Use the history panel to view detailed changes.`;
 
     private getHtmlForWebview(webview: vscode.Webview) {
         const codiconsUri = webview.asWebviewUri(vscode.Uri.joinPath(this.context.extensionUri, 'node_modules', '@vscode/codicons', 'dist', 'codicon.css'));
+        const chatCssUri = webview.asWebviewUri(vscode.Uri.joinPath(this.context.extensionUri, 'src', 'ui', 'chat.css'));
 
         return `<!DOCTYPE html>
         <html lang="en">
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link href="chat.css" rel="stylesheet">
+            <link href="${chatCssUri}" rel="stylesheet">
             <link href="${codiconsUri}" rel="stylesheet">
             <title>AI Code Agent Chat</title>
         </head>

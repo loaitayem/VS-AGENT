@@ -52,34 +52,33 @@ ai-code-agent/
 │   └── tasks.json                # Build tasks
 ├── src/
 │   ├── extension.ts              # Main entry point
-│   ├── agent/
-│   │   ├── agentCore.ts         # Core agent orchestration
-│   │   ├── taskPlanner.ts       # Task planning system
+│   ├── core/
+│   │   ├── core.ts              # Core agent orchestration
 │   │   ├── contextManager.ts    # Context preparation
-│   │   ├── sessionState.ts      # Session management
+│   │   └── sessionState.ts      # Session management
+│   ├── managers/
+│   │   ├── apiKeyManager.ts     # Secure credential storage
+│   │   ├── configManager.ts     # Settings management
+│   │   ├── modelManager.ts      # Model selection and config
+│   │   └── preprocessor.ts      # Free model integration
+│   ├── services/
+│   │   ├── indexer.ts           # Workspace indexing
+│   │   ├── promptAssistant.ts   # Prompt improvement system
+│   │   ├── diffManager.ts       # Diff generation and preview
 │   │   ├── fileEditor.ts        # Safe file operations
-│   │   └── diffManager.ts       # Diff generation and preview
-│   ├── api/
-│   │   └── apiKeyManager.ts     # Secure credential storage
-│   ├── assistant/
-│   │   └── promptAssistant.ts   # Prompt improvement system
-│   ├── config/
-│   │   └── configurationManager.ts # Settings management
-│   ├── indexer/
-│   │   └── codebaseIndexer.ts   # Workspace indexing
-│   ├── models/
-│   │   └── modelManager.ts      # Model selection and config
-│   ├── preprocessor/
-│   │   └── preprocessorManager.ts # Free model integration
-│   └── ui/
-│       ├── chatViewProvider.ts   # Chat interface
-│       ├── taskProgressProvider.ts # Progress tracking
-│       └── sessionHistoryProvider.ts # History view
-├── media/
-│   └── chat.css                  # UI styles
+│   │   └── taskPlanner.ts       # Task planning system
+│   ├── ui/
+│   │   ├── chat.ts              # Chat interface
+│   │   ├── chat.css             # UI styles
+│   │   ├── sessionHistory.ts    # History view
+│   │   └── taskProgress.ts      # Progress tracking
+│   └── test/
+│       └── testSample.ts        # Test files
+├── types/
+│   └── diff.d.ts                # Custom type declarations
 └── test/
     └── suite/
-        └── agentCore.test.ts     # Sample test suite
+        └── testSample.ts        # Sample test suite
 ```
 
 ## Technical Highlights

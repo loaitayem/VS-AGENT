@@ -162,24 +162,30 @@ Access settings through VS Code Settings or `AI Agent: Settings`:
 ai-code-agent/
 ├── src/
 │   ├── extension.ts          # Main entry point
-│   ├── agent/
-│   │   ├── agentCore.ts      # Core agent logic
-│   │   ├── taskPlanner.ts    # Task planning system
-│   │   ├── fileEditor.ts     # Safe file operations
+│   ├── core/
+│   │   ├── core.ts           # Core agent logic
+│   │   ├── contextManager.ts # Context management
 │   │   └── sessionState.ts   # Session management
-│   ├── indexer/
-│   │   └── codebaseIndexer.ts # Workspace indexing
-│   ├── preprocessor/
-│   │   └── preprocessorManager.ts # Free model integration
-│   ├── assistant/
-│   │   └── promptAssistant.ts # Prompt improvement
+│   ├── managers/
+│   │   ├── apiKeyManager.ts  # Secure key storage
+│   │   ├── configManager.ts  # Configuration management
+│   │   ├── modelManager.ts   # Model selection & management
+│   │   └── preprocessor.ts   # Free model integration
+│   ├── services/
+│   │   ├── indexer.ts        # Workspace indexing
+│   │   ├── promptAssistant.ts # Prompt improvement
+│   │   ├── diffManager.ts    # Diff generation & preview
+│   │   ├── fileEditor.ts     # Safe file operations
+│   │   └── taskPlanner.ts    # Task planning system
 │   ├── ui/
-│   │   ├── chatViewProvider.ts # Chat interface
-│   │   └── taskProgressProvider.ts # Progress tracking
-│   └── api/
-│       └── apiKeyManager.ts   # Secure key storage
-└── media/
-    └── chat.css              # UI styles
+│   │   ├── chat.ts          # Chat interface
+│   │   ├── chat.css         # UI styles
+│   │   ├── sessionHistory.ts # Session history tracking
+│   │   └── taskProgress.ts  # Progress tracking
+│   └── test/
+│       └── testSample.ts    # Test files
+└── types/
+    └── diff.d.ts            # Custom type declarations
 ```
 
 ### Data Flow
