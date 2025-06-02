@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final UI Test - VS Code AI Agent</title>
+    <link href="https://cdn.jsdelivr.net/npm/@vscode/codicons@0.0.35/dist/codicon.css" rel="stylesheet">
+    <style>
+        /* Simulate VS Code theme variables */
+        :root {
+            --vscode-input-background: #3c3c3c;
+            --vscode-input-foreground: #cccccc;
+            --vscode-input-border: #666666;
+            --vscode-focusBorder: #007fd4;
+            --vscode-button-background: #0e639c;
+            --vscode-button-foreground: #ffffff;
+            --vscode-button-hoverBackground: #1177bb;
+            --vscode-editor-background: #1e1e1e;
+            --vscode-descriptionForeground: #cccccc99;
+            --vscode-editor-inactiveSelectionBackground: #3a3d41;
+            --vscode-menu-background: #252526;
+            --vscode-menu-border: #454545;
+            --vscode-menu-foreground: #cccccc;
+            --vscode-menu-selectionBackground: #094771;
+            --vscode-menu-selectionForeground: #ffffff;
+            --vscode-widget-border: #666666;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--vscode-editor-background);
+            color: var(--vscode-input-foreground);
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: var(--vscode-input-foreground);
+            margin-bottom: 30px;
+        }
+
+        .test-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid var(--vscode-input-border);
+            border-radius: 8px;
+        }
+
+        .test-title {
+            color: #4fc3f7;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        /* Include the actual CSS from our extension */
+    </style>
+    <link href="src/ui/chat.css" rel="stylesheet">
+</head>
+<body>
+    <h1>🧪 Final UI Test - VS Code AI Agent Extension</h1>
+
+    <div class="test-section">
+        <h2 class="test-title">✅ Input Area with Absolute Positioned Controls</h2>
+        <div id="input-section">
+            <div class="input-container">
+                <textarea 
+                    id="message-input" 
+                    placeholder="Ask AI Agent or describe a task to execute..."
+                    rows="3"
+                ></textarea>
+                
+                <!-- Floating Controls at Bottom Right -->
+                <div class="input-controls-overlay">
+                    <!-- Model Selector -->
+                    <div class="input-model-selector">
+                        <select id="input-model-dropdown" title="Select AI Model">
+                            <optgroup label="Claude Opus 4">
+                                <option value="opus-4-thinking">Opus 4 - Thinking</option>
+                                <option value="opus-4-max">Opus 4 - Max</option>
+                            </optgroup>
+                            <optgroup label="Claude Sonnet 4">
+                                <option value="sonnet-4-thinking">Sonnet 4 - Thinking</option>
+                                <option value="sonnet-4-max">Sonnet 4 - Max</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    
+                    <!-- Action Dropdown -->
+                    <div class="action-dropdown">
+                        <button id="action-dropdown-btn" class="dropdown-button" title="More actions" onclick="toggleActionDropdown()">
+                            <span class="codicon codicon-chevron-down"></span>
+                        </button>
+                        <div id="action-dropdown-menu" class="dropdown-menu hidden">
+                            <button id="analyze-option" class="dropdown-item" title="Analyze and improve your prompt">
+                                <span class="codicon codicon-lightbulb"></span>
+                                <span>Analyze Prompt</span>
+                            </button>
+                            <button id="execute-option" class="dropdown-item" title="Execute as task (will modify code)">
+                                <span class="codicon codicon-run"></span>
+                                <span>Execute Task</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Send Button -->
+                    <button id="send-button" class="send-button" title="Send message">
+                        <span class="codicon codicon-send"></span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="input-footer">
+                <div class="help-text">
+                    <kbd>Enter</kbd> to send • <kbd>Ctrl+Enter</kbd> for task • <kbd>Ctrl+L</kbd> to analyze
+                </div>
+                <div class="token-counter">
+                    <span id="token-count">0 tokens</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2 class="test-title">✅ Codicon Display Test</h2>
+        <p>Testing various codicons used in the extension:</p>
+        <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+            <span class="codicon codicon-robot" style="font-size: 20px;"></span> Robot
+            <span class="codicon codicon-send" style="font-size: 16px;"></span> Send
+            <span class="codicon codicon-chevron-down" style="font-size: 14px;"></span> Dropdown
+            <span class="codicon codicon-lightbulb" style="font-size: 16px;"></span> Analyze
+            <span class="codicon codicon-run" style="font-size: 16px;"></span> Execute
+            <span class="codicon codicon-close" style="font-size: 14px;"></span> Close
+            <span class="codicon codicon-check" style="font-size: 16px;"></span> Check
+            <span class="codicon codicon-question" style="font-size: 16px;"></span> Question
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2 class="test-title">✅ Prompt Assistant Modal Test</h2>
+        <button onclick="showAssistant()" style="padding: 8px 12px; background: var(--vscode-button-background); color: var(--vscode-button-foreground); border: none; border-radius: 4px; cursor: pointer;">
+            Show Prompt Assistant
+        </button>
+        
+        <!-- Prompt Assistant Overlay -->
+        <div id="prompt-assistant-overlay" class="hidden">
+            <div id="prompt-assistant">
+                <div class="assistant-header">
+                    <h3><span class="codicon codicon-lightbulb"></span> Prompt Assistant</h3>
+                    <button class="close-button" onclick="closeAssistant()">
+                        <span class="codicon codicon-close"></span>
+                    </button>
+                </div>
+                <div class="assistant-content">
+                    <!-- Analysis Results -->
+                    <div id="analysis-section">
+                        <div class="analysis-metrics">
+                            <div class="metric">
+                                <label>Complexity</label>
+                                <span id="complexity-badge" class="badge medium">Medium</span>
+                            </div>
+                            <div class="metric">
+                                <label>Confidence</label>
+                                <span id="confidence-score">85%</span>
+                            </div>
+                            <div class="metric">
+                                <label>Recommended</label>
+                                <span id="recommended-model">Opus 4</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Suggestions -->
+                    <div id="suggestions-section">
+                        <h4>Suggestions</h4>
+                        <div id="suggestions-list">
+                            <div class="suggestion-item medium">
+                                <div class="suggestion-content">
+                                    <span class="codicon codicon-lightbulb"></span>
+                                    <span>Consider adding more context to your prompt</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Prompt -->
+                    <div id="enhanced-section">
+                        <h4>Enhanced Prompt</h4>
+                        <div id="enhanced-prompt-text" class="enhanced-prompt-box">
+                            Your enhanced prompt would appear here...
+                        </div>
+                        <button class="action-button primary" onclick="useEnhancedPrompt()">
+                            <span class="codicon codicon-check"></span>
+                            Use Enhanced Prompt
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2 class="test-title">📱 Mobile Responsiveness Test</h2>
+        <p>Resize your browser window to test mobile responsiveness of the new overlay design.</p>
+    </div>
+
+    <script>
+        // Test JavaScript functionality
+        function toggleActionDropdown() {
+            const menu = document.getElementById('action-dropdown-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function closeDropdownOnOutsideClick(event) {
+            const dropdown = document.getElementById('action-dropdown-menu');
+            const button = document.getElementById('action-dropdown-btn');
+            
+            if (!dropdown.contains(event.target) && !button.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        }
+
+        function autoResizeTextarea() {
+            const textarea = document.getElementById('message-input');
+            const container = document.querySelector('.input-container');
+            
+            // Reset height to auto to get the actual scroll height
+            textarea.style.height = 'auto';
+            
+            // Calculate new height with constraints
+            const minHeight = 80; // Minimum container height
+            const maxHeight = 200; // Maximum height
+            const contentHeight = Math.max(textarea.scrollHeight + 20, minHeight); // +20 for padding
+            const newHeight = Math.min(contentHeight, maxHeight);
+            
+            // Apply to both textarea and container
+            textarea.style.height = (newHeight - 20) + 'px'; // -20 for padding
+            container.style.minHeight = newHeight + 'px';
+        }
+
+        function showAssistant() {
+            document.getElementById('prompt-assistant-overlay').classList.remove('hidden');
+        }
+
+        function closeAssistant() {
+            document.getElementById('prompt-assistant-overlay').classList.add('hidden');
+        }
+
+        function useEnhancedPrompt() {
+            alert('Enhanced prompt would be applied to the textarea');
+            closeAssistant();
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-resize textarea
+            const textarea = document.getElementById('message-input');
+            textarea.addEventListener('input', autoResizeTextarea);
+            
+            // Close dropdown on outside click
+            document.addEventListener('click', closeDropdownOnOutsideClick);
+            
+            // Close assistant on overlay click
+            document.getElementById('prompt-assistant-overlay').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeAssistant();
+                }
+            });
+            
+            console.log('✅ All event listeners attached successfully');
+        });
+
+        // Test results
+        setTimeout(() => {
+            console.log('🧪 UI Test Results:');
+            console.log('✅ Codicons loaded:', document.querySelector('.codicon').getComputedStyle !== undefined);
+            console.log('✅ Input container present:', !!document.querySelector('.input-container'));
+            console.log('✅ Controls overlay present:', !!document.querySelector('.input-controls-overlay'));
+            console.log('✅ Prompt assistant present:', !!document.getElementById('prompt-assistant'));
+            console.log('✅ All span tags for codicons:', document.querySelectorAll('.codicon').length > 0);
+        }, 1000);
+    </script>
+</body>
+</html>

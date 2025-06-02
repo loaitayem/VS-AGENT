@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/@vscode/codicons@0.0.35/dist/codicon.css" rel="stylesheet">
+    <style>
+        /* VS Code Theme Variables */
+        :root {
+            --vscode-font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', sans-serif;
+            --vscode-button-background: #0e639c;
+            --vscode-button-foreground: #ffffff;
+            --vscode-button-hoverBackground: #1177bb;
+            --vscode-button-secondaryBackground: #5a5d5e;
+            --vscode-button-secondaryForeground: #ffffff;
+            --vscode-button-secondaryHoverBackground: #6c7293;
+        }
+        
+        /* Action Button Styles */
+        .action-button {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 13px;
+            font-family: var(--vscode-font-family);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+            min-width: 110px;
+            min-height: 55px;
+            justify-content: center;
+        }
+
+        .action-button.primary {
+            background-color: var(--vscode-button-background);
+            color: var(--vscode-button-foreground);
+        }
+
+        .action-button.primary:hover:not(:disabled) {
+            background-color: var(--vscode-button-hoverBackground);
+        }
+
+        .action-button.secondary {
+            background-color: var(--vscode-button-secondaryBackground);
+            color: var(--vscode-button-secondaryForeground);
+        }
+
+        .action-button.secondary:hover:not(:disabled) {
+            background-color: var(--vscode-button-secondaryHoverBackground);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Button Test</h1>
+    <div class="button-group">
+        <button class="action-button secondary" title="Analyze and improve your prompt">
+            <i class="codicon codicon-lightbulb"></i>
+            <span>Analyze</span>
+        </button>
+        <button class="action-button secondary" title="Send message for chat (no code changes)">
+            <i class="codicon codicon-comment"></i>
+            <span>Chat</span>
+        </button>
+        <button class="action-button primary" title="Execute as task (will modify code)">
+            <i class="codicon codicon-play"></i>
+            <span>Execute Task</span>
+        </button>
+    </div>
+</body>
+</html>

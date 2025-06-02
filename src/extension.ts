@@ -28,9 +28,9 @@ export async function activate(context: vscode.ExtensionContext) {
     promptAssistant = new PromptAssistant(preprocessorManager);
 
     // Initialize UI providers
-    const chatProvider = new ChatViewProvider(context, agentCore, promptAssistant);
-    const taskProvider = new TaskProgressProvider(context, agentCore);
-    const historyProvider = new SessionHistoryProvider(context, agentCore);
+const chatProvider = new ChatViewProvider(context, agentCore, promptAssistant, modelManager);
+const taskProvider = new TaskProgressProvider(context, agentCore);
+const historyProvider = new SessionHistoryProvider(context, agentCore);
 
     // Register webview providers
     context.subscriptions.push(

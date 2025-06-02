@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VS Code Extension Codicon Test</title>
+    
+    <!-- Primary: Load from local node_modules (simulating extension environment) -->
+    <link href="node_modules/@vscode/codicons/dist/codicon.css" rel="stylesheet">
+    
+    <!-- Fallback: CDN for testing -->
+    <link href="https://cdn.jsdelivr.net/npm/@vscode/codicons@0.0.36/dist/codicon.css" rel="stylesheet">
+    
+    <!-- Our extension CSS -->
+    <link href="src/ui/chat.css" rel="stylesheet">
+    
+    <style>
+        /* VS Code theme simulation */
+        :root {
+            --vscode-input-background: #3c3c3c;
+            --vscode-input-foreground: #cccccc;
+            --vscode-input-border: #666666;
+            --vscode-focusBorder: #007fd4;
+            --vscode-button-background: #0e639c;
+            --vscode-button-foreground: #ffffff;
+            --vscode-button-hoverBackground: #1177bb;
+            --vscode-button-secondaryBackground: #5a5a5a;
+            --vscode-button-secondaryHoverBackground: #6a6a6a;
+            --vscode-editor-background: #1e1e1e;
+            --vscode-descriptionForeground: #cccccc99;
+            --vscode-editor-inactiveSelectionBackground: #3a3d41;
+            --vscode-menu-background: #252526;
+            --vscode-menu-border: #454545;
+            --vscode-menu-foreground: #cccccc;
+            --vscode-menu-selectionBackground: #094771;
+            --vscode-menu-selectionForeground: #ffffff;
+            --vscode-widget-border: #666666;
+            --vscode-panel-border: #454545;
+            --vscode-foreground: #cccccc;
+            --vscode-font-family: "Segoe UI", Tahoma, sans-serif;
+            --vscode-font-size: 13px;
+        }
+        
+        body {
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .test-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .test-result {
+            background: var(--vscode-editor-inactiveSelectionBackground);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .success { border-left: 4px solid #4caf50; }
+        .error { border-left: 4px solid #f44336; }
+        .warning { border-left: 4px solid #ff9800; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 VS Code Extension Codicon Test</h1>
+        <p>Testing codicon implementation for the AI Code Agent extension</p>
+
+        <!-- Test the actual extension HTML structure -->
+        <div class="test-result">
+            <h2>📱 Actual Extension Input Component</h2>
+            <div id="input-section">
+                <div class="input-container">
+                    <textarea 
+                        id="message-input" 
+                        placeholder="Ask AI Agent or describe a task to execute..."
+                        rows="3"
+                    ></textarea>
+                    
+                    <!-- Floating Controls at Bottom Right -->
+                    <div class="input-controls-overlay">
+                        <!-- Model Selector -->
+                        <div class="input-model-selector">
+                            <select id="input-model-dropdown" title="Select AI Model">
+                                <optgroup label="Claude Opus 4">
+                                    <option value="opus-4-thinking">Opus 4 - Thinking</option>
+                                    <option value="opus-4-max">Opus 4 - Max</option>
+                                </optgroup>
+                                <optgroup label="Claude Sonnet 4">
+                                    <option value="sonnet-4-thinking">Sonnet 4 - Thinking</option>
+                                    <option value="sonnet-4-max">Sonnet 4 - Max</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        
+                        <!-- Action Dropdown -->
+                        <div class="action-dropdown">
+                            <button id="action-dropdown-btn" class="dropdown-button" title="More actions" onclick="toggleActionDropdown()">
+                                <span class="codicon codicon-chevron-down"></span>
+                            </button>
+                            <div id="action-dropdown-menu" class="dropdown-menu hidden">
+                                <button id="analyze-option" class="dropdown-item" title="Analyze and improve your prompt">
+                                    <span class="codicon codicon-lightbulb"></span>
+                                    <span>Analyze Prompt</span>
+                                </button>
+                                <button id="execute-option" class="dropdown-item" title="Execute as task (will modify code)">
+                                    <span class="codicon codicon-run"></span>
+                                    <span>Execute Task</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Send Button -->
+                        <button id="send-button" class="send-button" title="Send message">
+                            <span class="codicon codicon-send"></span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="input-footer">
+                    <div class="help-text">
+                        <kbd>Enter</kbd> to send • <kbd>Ctrl+Enter</kbd> for task • <kbd>Ctrl+L</kbd> to analyze
+                    </div>
+                    <div class="token-counter">
+                        <span id="token-count">0 tokens</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Icon Test Grid -->
+        <div class="test-result">
+            <h2>🎯 Icon Visibility Test</h2>
+            <p>All icons below should be visible. If you see empty squares or missing icons, there's a codicon loading issue.</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 15px 0;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="codicon codicon-robot" style="font-size: 18px;"></span>
+                    <span>Robot</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="codicon codicon-send" style="font-size: 16px;"></span>
+                    <span>Send</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="codicon codicon-chevron-down" style="font-size: 14px;"></span>
+                    <span>Dropdown</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="codicon codicon-lightbulb" style="font-size: 16px;"></span>
+                    <span>Analyze</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="codicon codicon-run" style="font-size: 16px;"></span>
+                    <span>Execute</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="codicon codicon-close" style="font-size: 14px;"></span>
+                    <span>Close</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Diagnostic Results -->
+        <div id="diagnostic-results"></div>
+    </div>
+
+    <script>
+        // Extension JavaScript functions
+        function toggleActionDropdown() {
+            const menu = document.getElementById('action-dropdown-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function closeDropdownOnOutsideClick(event) {
+            const dropdown = document.getElementById('action-dropdown-menu');
+            const button = document.getElementById('action-dropdown-btn');
+            
+            if (!dropdown.contains(event.target) && !button.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        }
+
+        function autoResizeTextarea() {
+            const textarea = document.getElementById('message-input');
+            const container = document.querySelector('.input-container');
+            
+            textarea.style.height = 'auto';
+            
+            const minHeight = 80;
+            const maxHeight = 200;
+            const contentHeight = Math.max(textarea.scrollHeight + 20, minHeight);
+            const newHeight = Math.min(contentHeight, maxHeight);
+            
+            textarea.style.height = (newHeight - 20) + 'px';
+            container.style.minHeight = newHeight + 'px';
+        }
+
+        // Diagnostic function
+        function runDiagnostics() {
+            const results = [];
+            
+            // Test 1: Check if codicon font is loaded
+            document.fonts.ready.then(() => {
+                const testElement = document.createElement('span');
+                testElement.className = 'codicon codicon-robot';
+                testElement.style.visibility = 'hidden';
+                testElement.style.position = 'absolute';
+                document.body.appendChild(testElement);
+                
+                const computedStyle = getComputedStyle(testElement);
+                const fontFamily = computedStyle.fontFamily;
+                const fontLoaded = fontFamily.includes('codicon');
+                
+                document.body.removeChild(testElement);
+                
+                results.push({
+                    test: 'Codicon Font Loading',
+                    status: fontLoaded ? 'success' : 'error',
+                    message: fontLoaded ? 
+                        `✅ Font loaded successfully (${fontFamily})` : 
+                        `❌ Font not loaded (${fontFamily})`
+                });
+                
+                // Test 2: Check if CSS files are loaded
+                const cssLoaded = document.styleSheets.length > 0;
+                results.push({
+                    test: 'CSS Loading',
+                    status: cssLoaded ? 'success' : 'error',
+                    message: cssLoaded ? 
+                        `✅ ${document.styleSheets.length} CSS files loaded` : 
+                        '❌ No CSS files loaded'
+                });
+                
+                // Test 3: Check if codicon elements exist
+                const codiconElements = document.querySelectorAll('.codicon');
+                results.push({
+                    test: 'Codicon Elements',
+                    status: codiconElements.length > 0 ? 'success' : 'error',
+                    message: `${codiconElements.length > 0 ? '✅' : '❌'} Found ${codiconElements.length} codicon elements`
+                });
+                
+                // Test 4: Check if extension structure exists
+                const inputContainer = document.querySelector('.input-container');
+                const controlsOverlay = document.querySelector('.input-controls-overlay');
+                const structureOk = inputContainer && controlsOverlay;
+                
+                results.push({
+                    test: 'Extension Structure',
+                    status: structureOk ? 'success' : 'error',
+                    message: structureOk ? 
+                        '✅ Extension HTML structure is correct' : 
+                        '❌ Extension HTML structure is missing'
+                });
+                
+                // Render results
+                displayResults(results);
+            });
+        }
+        
+        function displayResults(results) {
+            const container = document.getElementById('diagnostic-results');
+            container.innerHTML = '<h2>🔍 Diagnostic Results</h2>';
+            
+            results.forEach(result => {
+                const div = document.createElement('div');
+                div.className = `test-result ${result.status}`;
+                div.innerHTML = `
+                    <h3>${result.test}</h3>
+                    <p>${result.message}</p>
+                `;
+                container.appendChild(div);
+            });
+            
+            // Overall status
+            const allPassed = results.every(r => r.status === 'success');
+            const statusDiv = document.createElement('div');
+            statusDiv.className = `test-result ${allPassed ? 'success' : 'error'}`;
+            statusDiv.innerHTML = `
+                <h3>Overall Status</h3>
+                <p>${allPassed ? '🎉 All tests passed! Extension should work correctly.' : '⚠️ Some tests failed. Check the issues above.'}</p>
+            `;
+            container.appendChild(statusDiv);
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Attach event listeners
+            const textarea = document.getElementById('message-input');
+            textarea.addEventListener('input', autoResizeTextarea);
+            document.addEventListener('click', closeDropdownOnOutsideClick);
+            
+            // Run diagnostics
+            setTimeout(runDiagnostics, 1000);
+            
+            console.log('🧪 Extension test initialized');
+        });
+    </script>
+</body>
+</html>
